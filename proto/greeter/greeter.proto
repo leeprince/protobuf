@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+// proto 包名，防止定义的消息类型命名冲突
+package greeter;
+
+option go_package = "/greeter";
+
+service Greeter {
+    rpc Hello(HelloRequest) returns (HelloResponse) {}
+}
+message HelloRequest {
+    string name = 1;
+}
+message HelloResponse {
+    string greeting = 2;
+}
