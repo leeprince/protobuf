@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GreeterClient interface {
-	Hello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error)
+	Hello(ctx context.Context, in *GreeterReq, opts ...grpc.CallOption) (*GreeterRsp, error)
 }
 
 type greeterClient struct {
@@ -29,8 +29,8 @@ func NewGreeterClient(cc grpc.ClientConnInterface) GreeterClient {
 	return &greeterClient{cc}
 }
 
-func (c *greeterClient) Hello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error) {
-	out := new(HelloResponse)
+func (c *greeterClient) Hello(ctx context.Context, in *GreeterReq, opts ...grpc.CallOption) (*GreeterRsp, error) {
+	out := new(GreeterRsp)
 	err := c.cc.Invoke(ctx, "/greeter.Greeter/Hello", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -42,7 +42,7 @@ func (c *greeterClient) Hello(ctx context.Context, in *HelloRequest, opts ...grp
 // All implementations must embed UnimplementedGreeterServer
 // for forward compatibility
 type GreeterServer interface {
-	Hello(context.Context, *HelloRequest) (*HelloResponse, error)
+	Hello(context.Context, *GreeterReq) (*GreeterRsp, error)
 	mustEmbedUnimplementedGreeterServer()
 }
 
@@ -50,7 +50,7 @@ type GreeterServer interface {
 type UnimplementedGreeterServer struct {
 }
 
-func (UnimplementedGreeterServer) Hello(context.Context, *HelloRequest) (*HelloResponse, error) {
+func (UnimplementedGreeterServer) Hello(context.Context, *GreeterReq) (*GreeterRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Hello not implemented")
 }
 func (UnimplementedGreeterServer) mustEmbedUnimplementedGreeterServer() {}
@@ -67,7 +67,7 @@ func RegisterGreeterServer(s grpc.ServiceRegistrar, srv GreeterServer) {
 }
 
 func _Greeter_Hello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HelloRequest)
+	in := new(GreeterReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -79,7 +79,7 @@ func _Greeter_Hello_Handler(srv interface{}, ctx context.Context, dec func(inter
 		FullMethod: "/greeter.Greeter/Hello",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GreeterServer).Hello(ctx, req.(*HelloRequest))
+		return srv.(GreeterServer).Hello(ctx, req.(*GreeterReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }

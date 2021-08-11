@@ -93,9 +93,9 @@ proto 文件与 ptotoc 生成的 grpc protobuf go 文件当作一个项目，并
 > 方式一 【推荐】
 1. cd . # 在当前项目protobuf根目录下
 2. 执行：
-```
-protoc -I=. --go_out=../../grpc/ ./greeter.proto
-```
+    ```
+    protoc -I=proto/greeter --go_out=./grpc/ proto/greeter/greeter.proto
+    ```
 3. 在 grpc/ 目录下自动创建 greeter 目录并生成的文件：greeter.pb.go
 
 > 方式二
@@ -105,11 +105,6 @@ protoc -I=. --go_out=../../grpc/ ./greeter.proto
     protoc -I=. --go_out=../../grpc ./greeter.proto
     ```
 3. 在 grpc/ 目录下自动创建greeter 目录并生成的文件：greeter.pb.go
-
-
-```
-protoc -I=. --go_out=../../grpc/ ./greeter.proto
-```
 
 ### 2. 生成：greeter.pb.go、greeter_grpc.pb.go
 - protoc-gen-go 命令自动生成 *.pb.go
@@ -149,7 +144,6 @@ protoc --go_out=$GOROOT/src/rpc/greeter/ --go_opt=paths=source_relative \
     --go-grpc_out=$GOROOT/src/rpc/greeter/ --go-grpc_opt=paths=source_relative \
     greeter.proto
 ```
-
 
 
 ## （三）protoc 生成 protobuf go 文件保存到当前项目
