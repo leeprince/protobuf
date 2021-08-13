@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+// proto 包名，防止定义的消息类型命名冲突
+package greeter;
+
+option go_package = "/gin_micro";
+
+service UserService {
+    rpc GetUsers(GetUsersReq) returns (GetUsersRsp) {}
+}
+
+message GetUsersReq {
+  int64 UserId = 1;
+}
+message GetUsersRsp {
+  int32 Code = 1;
+  string Message = 2;
+  bytes Data = 3;
+}

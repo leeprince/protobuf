@@ -6,11 +6,11 @@ package greeter;
 option go_package = "/greeter";
 
 service Greeter {
-    rpc Hello(GreeterReq) returns (GreeterRsp) {}
+  rpc Hello(GreeterReq) returns (GreeterRsp) {}
 }
 message GreeterReq {
-    string name = 1;
+  string name = 1;
 }
 message GreeterRsp {
-    string greeting = 2;
+  string greeting = 2;
 }
